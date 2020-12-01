@@ -4,7 +4,7 @@ namespace AdventCode20
 {
     public static class NumberChecker
     {
-        public static bool TryGetCombinedNumberWhenAddingTo2020(int[] values, out int? combinedValue)
+        public static bool TryGetCombinedNumberIfNumbersSumTo2020(int[] values, out int? combinedValue)
         {
             if (values.Sum() != 2020)
             {

@@ -22,7 +22,7 @@ namespace AdventCode20
                 for (var j = i + 1; j < values.Length-1; j++)
                 {
                     var secondValue = int.Parse(values[j]);
-                    if (NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstValue, secondValue}, out var combinedValue) && combinedValue != null)
+                    if (NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstValue, secondValue}, out var combinedValue) && combinedValue != null)
                     {
                         return (int)combinedValue;
                     }
@@ -45,7 +45,7 @@ namespace AdventCode20
                     for (var k = j + 1; k < values.Length - 1; k++)
                     {
                         var thirdValue = int.Parse(values[k]);
-                        if (NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstValue, secondValue,thirdValue}, out var combinedValue) && combinedValue != null)
+                        if (NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstValue, secondValue,thirdValue}, out var combinedValue) && combinedValue != null)
                         {
                             return (int)combinedValue;
                         }

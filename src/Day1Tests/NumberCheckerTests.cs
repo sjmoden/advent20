@@ -15,7 +15,7 @@ namespace Day1Tests.NumberCheckerTests
         public void Then_the_correct_number_is_returned()
         {
             Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
-            Assume.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber}, out var testValue), Is.True);
+            Assume.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber}, out var testValue), Is.True);
             Assert.That(testValue, Is.EqualTo(firstNumber * secondNumber));
         }
         
@@ -23,7 +23,7 @@ namespace Day1Tests.NumberCheckerTests
         public void Then_the_result_is_true()
         {
             Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
-            Assert.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber}, out _), Is.True);
+            Assert.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber}, out _), Is.True);
         }
     }
     
@@ -37,14 +37,14 @@ namespace Day1Tests.NumberCheckerTests
         [Test]
         public void Then_the_correct_number_is_not_returned()
         {
-            Assume.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber}, out var testValue), Is.False);
+            Assume.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber}, out var testValue), Is.False);
             Assert.That(testValue, Is.Null);
         }
         
         [Test]
         public void Then_the_result_is_false()
         {
-            Assert.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber}, out _), Is.False);
+            Assert.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber}, out _), Is.False);
         }
     }
     
@@ -59,7 +59,7 @@ namespace Day1Tests.NumberCheckerTests
         public void Then_the_correct_number_is_returned()
         {
             Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
-            Assume.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber, thirdNumber}, out var testValue), Is.True);
+            Assume.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out var testValue), Is.True);
             Assert.That(testValue, Is.EqualTo(firstNumber * secondNumber * thirdNumber));
         }
         
@@ -67,7 +67,7 @@ namespace Day1Tests.NumberCheckerTests
         public void Then_the_result_is_true()
         {
             Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
-            Assert.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber, thirdNumber}, out _), Is.True);
+            Assert.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out _), Is.True);
         }
     }
     
@@ -82,14 +82,14 @@ namespace Day1Tests.NumberCheckerTests
         [Test]
         public void Then_the_correct_number_is_not_returned()
         {
-            Assume.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber, thirdNumber}, out var testValue), Is.False);
+            Assume.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out var testValue), Is.False);
             Assert.That(testValue, Is.Null);
         }
         
         [Test]
         public void Then_the_result_is_false()
         {
-            Assert.That(NumberChecker.TryGetCombinedNumberWhenAddingTo2020(new []{firstNumber, secondNumber, thirdNumber}, out _), Is.False);
+            Assert.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out _), Is.False);
         }
     }
 }
