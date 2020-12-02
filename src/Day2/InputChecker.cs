@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Tools;
 
 namespace Day2
@@ -14,11 +13,12 @@ namespace Day2
             _puzzleInput = puzzleInput;
         }
 
-        public int CheckInputToGetAnswerPart1()
+        private void CheckInputToGetAnswers()
         {
             var values = _puzzleInput.GetPuzzleInputAsArray(InputUrl);
 
-            int count = 0;
+            _part1Answer = 0;
+            _part2Answer = 0;
             foreach (var value in values)
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -33,11 +33,42 @@ namespace Day2
 
                 if (PasswordPolicyChecker.CheckPassword(checkChar, minValue, maxValue, password))
                 {
-                    count++;
+                    _part1Answer++;
+                }
+
+                if (PasswordPolicyChecker.CheckOfficialPassword(checkChar, minValue, maxValue, password))
+                {
+                    _part2Answer++;
                 }
             }
+        }
 
-            return count;
+        private int _part1Answer;
+
+        public int Part1Answer
+        {
+            get
+            {
+                if (_part1Answer == default)
+                {
+                    CheckInputToGetAnswers();
+                }
+
+                return _part1Answer;
+            }
+        }
+
+        private int _part2Answer;
+        public int Part2Answer {
+            get
+            {
+                if (_part2Answer == default)
+                {
+                    CheckInputToGetAnswers();
+                }
+
+                return _part2Answer;
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     public interface IInputChecker
     {
-        int CheckInputToGetAnswerPart1();
+        int Part1Answer { get; }
+        int Part2Answer { get; }
     }
 }

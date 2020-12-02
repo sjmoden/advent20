@@ -29,4 +29,34 @@ namespace Day2Tests.PasswordPolicyReaderTests
             Assert.That(PasswordPolicyChecker.CheckPassword('a',1,3,@"abacadae"), Is.False);
         }
     }
+    
+    [TestFixture]
+    public class When_running_CheckOfficialPassword_on_valid_entry_with_only_one_item_correct
+    {
+        [Test]
+        public void Then_true_is_returned()
+        {
+            Assert.That(PasswordPolicyChecker.CheckPassword('a',1,3,@"abcde"), Is.True);
+        }
+    }
+    
+    [TestFixture]
+    public class When_running_CheckOfficialPassword_on_invalid_entries_with_two_items_correct
+    {
+        [Test]
+        public void Then_false_is_returned()
+        {
+            Assert.That(PasswordPolicyChecker.CheckOfficialPassword('c',1,3,@"ccccccccc"), Is.False);
+        }
+    }
+    
+    [TestFixture]
+    public class When_running_CheckOfficialPassword_on_invalid_entries_with_no_items_correct
+    {
+        [Test]
+        public void Then_false_is_returned()
+        {
+            Assert.That(PasswordPolicyChecker.CheckOfficialPassword('b',1,3,@"cdefg"), Is.False);
+        }
+    }
 }

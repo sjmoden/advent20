@@ -10,7 +10,8 @@ namespace Day2
         {
             var container = BuildUnityContainer();
             var inputChecker = container.Resolve<IInputChecker>();
-            Console.WriteLine($"Part 1: {inputChecker.CheckInputToGetAnswerPart1()}");
+            Console.WriteLine($"Part 1: {inputChecker.Part1Answer}");
+            Console.WriteLine($"Part 2: {inputChecker.Part2Answer}");
         }
         
         private static IUnityContainer BuildUnityContainer()

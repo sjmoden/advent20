@@ -8,7 +8,7 @@ using Tools;
 namespace Day2Tests.InputCheckerTests
 {
     [TestFixture]
-    public class When_running_input_checker_with_example_values_for_part1
+    public class When_running_input_checker_with_example_values
     {
         private InputChecker _sut;
 
@@ -24,9 +24,15 @@ namespace Day2Tests.InputCheckerTests
         }
 
         [Test]
-        public void Then_output_value_is_correct()
+        public void Then_output_value_for_part1_is_correct()
         {
-            Assert.That(_sut.CheckInputToGetAnswerPart1(), Is.EqualTo(2));
+            Assert.That(_sut.Part1Answer, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void Then_output_value_for_part2_is_correct()
+        {
+            Assert.That(_sut.Part2Answer, Is.EqualTo(1));
         }
     }
 }
