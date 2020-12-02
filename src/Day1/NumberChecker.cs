@@ -12,7 +12,7 @@ namespace AdventCode20
                 return false;
             }
 
-            combinedValue = values.Aggregate((a, x) => a * x);;
+            combinedValue = values.Aggregate((a, x) => a * x);
             return true;
         }
     }
