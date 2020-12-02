@@ -58,7 +58,7 @@ namespace Day1Tests.NumberCheckerTests
         [Test]
         public void Then_the_correct_number_is_returned()
         {
-            Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
+            Assume.That(firstNumber+secondNumber+thirdNumber, Is.EqualTo(2020));
             Assume.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out var testValue), Is.True);
             Assert.That(testValue, Is.EqualTo(firstNumber * secondNumber * thirdNumber));
         }
@@ -66,7 +66,7 @@ namespace Day1Tests.NumberCheckerTests
         [Test]
         public void Then_the_result_is_true()
         {
-            Assume.That(firstNumber+secondNumber, Is.EqualTo(2020));
+            Assume.That(firstNumber+secondNumber+thirdNumber, Is.EqualTo(2020));
             Assert.That(NumberChecker.TryGetCombinedNumberIfNumbersSumTo2020(new []{firstNumber, secondNumber, thirdNumber}, out _), Is.True);
         }
     }
