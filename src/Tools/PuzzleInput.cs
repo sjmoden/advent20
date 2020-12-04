@@ -30,10 +30,15 @@ namespace Tools
             }
         }
 
-        public string[] GetPuzzleInputAsArray(string url)
+        public string[] GetPuzzleInputAsArray(string url, string separator)
         {
             var webpage = GetPuzzleInput(url);
-            return webpage.Split("\n");
+            return webpage.Split(separator);
+        }
+
+        public string[] GetPuzzleInputAsArray(string url)
+        {
+            return GetPuzzleInputAsArray(url, "\n");
         }
     }
 }
