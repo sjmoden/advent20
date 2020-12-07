@@ -36,5 +36,11 @@ namespace Day6Tests
         {
             Assert.That(_sut.CheckInputToGetAnswerPart1(), Is.EqualTo("11"));
         }
+
+        [Test]
+        public void Then_output_value_for_part2_is_correct()
+        {
+            Assert.That(_sut.CheckInputToGetAnswerPart2(), Is.EqualTo("6"));
+        }
     }
 }
