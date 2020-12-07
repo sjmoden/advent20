@@ -30,7 +30,7 @@ namespace Day7Tests.BagTests
         {
             var mockRules = new Mock<IRules>();
             mockRules.Setup(r => r.Rules).Returns(_inputArray);
-            _sut=  new Bag("light red bags contain 1 bright white bag, 2 muted yellow bags.", mockRules.Object);
+            _sut=  new Bag("light red bags contain 1 bright white bag, 2 muted yellow bags.", mockRules.Object, new Tree());
         }
 
         [Test]

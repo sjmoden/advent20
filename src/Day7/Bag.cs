@@ -8,11 +8,13 @@ namespace Day7
     {
         private readonly string _bagDetailsString;
         private readonly IRules _rules;
+        private readonly ITree _tree;
         
-        public Bag(string bagDetailsString, IRules rules)
+        public Bag(string bagDetailsString, IRules rules, ITree tree)
         {
             _bagDetailsString = bagDetailsString;
             _rules = rules;
+            _tree = tree;
         }
 
         private string _bagName;
@@ -21,16 +23,34 @@ namespace Day7
 
         private IEnumerable<IBag> _contents;
         
-        public IEnumerable<IBag>Contents=> _contents ??=GetContents();
+        public IEnumerable<IBag>Contents
+        {
+            get
+            {
+                if (_contents == null)
+                {
+                    PopulateContents();
+                }
+                return _contents;
 
-        public int NumberOfBagsInTheContextsRecursive => Contents.Count()+Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
+            }
+        }
+
+        //public int NumberOfBagsInTheContextsRecursive => Contents.Count()+Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
+        public int NumberOfBagsInTheContextsRecursive
+        {
+            get
+            {
+                var cnt = Contents.Count();
+                var sm = Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
+                return  cnt+ sm;
+            }
+        }
 
         public bool ContainsAGoldBag
         {
             get
             {
-                //This could be more efficient by adding a cache that details whether a bags status has already been decided.
-
                 return Contents.Any(b => b.BagName.Equals("shiny gold", StringComparison.InvariantCultureIgnoreCase)) ||
                        Contents.Distinct().Any(bag => bag.ContainsAGoldBag);
             }
@@ -42,8 +62,14 @@ namespace Day7
             return _bagDetailsString.Substring(0,bagPositionInString).Trim();
         }
 
-        private IEnumerable<IBag> GetContents()
+        private void PopulateContents()
         {
+            if (_tree.TryGetNode(BagName, out var bagFromTree))
+            {
+                _contents = bagFromTree.Contents;
+                return;
+            }
+            
             var containingBags = new List<IBag>();
             
             var containPositionInString = _bagDetailsString.IndexOf("contain", StringComparison.InvariantCultureIgnoreCase);
@@ -51,14 +77,16 @@ namespace Day7
 
             if (contentsDetails.Equals("no other bags.",StringComparison.InvariantCultureIgnoreCase))
             {
-                return containingBags;
+                _tree.AddNode(this);
+                _contents = containingBags;
+                return;
             }
             
             var bagsDetails = contentsDetails.Split(',');
             foreach (var bagsDetail in bagsDetails)
             {
                 var numberOfBagsStr = bagsDetail.Trim().Substring(0,bagsDetail.Trim().IndexOf(" ", StringComparison.InvariantCultureIgnoreCase));
-                var bagName = bagsDetail.Trim().Substring(bagsDetail.Trim().IndexOf(" ", StringComparison.InvariantCultureIgnoreCase)).Replace(@".", string.Empty).Trim();
+                var bagName = bagsDetail.Trim().Substring(bagsDetail.Trim().IndexOf(" ", StringComparison.InvariantCultureIgnoreCase)).Replace("bags","").Replace("bag","").Replace(@".", string.Empty).Trim();
                 var matchingBagRule =
                     _rules.Rules.Single(r => r.StartsWith(bagName, StringComparison.InvariantCultureIgnoreCase));
 
@@ -69,12 +97,27 @@ namespace Day7
 
                 for (var i = 0; i < numberOfBags; i++)
                 {
-                    containingBags.Add(new Bag(matchingBagRule,_rules));
+                    if (_tree.TryGetNode(bagName, out var subBagFromTree))
+                    {
+                        containingBags.Add(subBagFromTree);
+                    }
+                    else
+                    {
+                        var subBag = new Bag(matchingBagRule, _rules, _tree).GetBagAndContainingBags();
+                        containingBags.Add(subBag);    
+                    }
+                    
                 }
             }
-            
-            
-            return containingBags;
+
+            _contents = containingBags;
+            _tree.AddNode(this);
+        }
+
+        private Bag GetBagAndContainingBags()
+        {
+            PopulateContents();
+            return this;
         }
 
         public override bool Equals(object obj)

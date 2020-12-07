@@ -5,10 +5,12 @@ namespace Day7
     public class InputChecker:IInputChecker
     {
         private readonly IRules _rules;
+        private readonly ITree _tree;
 
-        public InputChecker(IRules rules)
+        public InputChecker(IRules rules, ITree tree)
         {
             _rules = rules;
+            _tree = tree;
         }
 
         public string CheckInputToGetAnswerPart1()
@@ -21,7 +23,7 @@ namespace Day7
                     continue;
                     
                 }
-                var bag = new Bag(rule, _rules);
+                var bag = new Bag(rule, _rules,_tree);
                 if (bag.ContainsAGoldBag)
                 {
                     containingGoldBagCount++;
@@ -34,7 +36,7 @@ namespace Day7
         public string CheckInputToGetAnswerPart2()
         {
             var goldRule = _rules.Rules.Single(r => r.StartsWith("shiny gold bag"));
-            var bag = new Bag(goldRule,_rules);
+            var bag = new Bag(goldRule,_rules,_tree);
             return  bag.NumberOfBagsInTheContextsRecursive.ToString();
         }
     }

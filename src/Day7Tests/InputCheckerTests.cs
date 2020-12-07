@@ -31,7 +31,7 @@ namespace Day7Tests.InputCheckerTests
             var mockRules = new Mock<IRules>();
             mockRules.Setup(r => r.Rules).Returns(inputArray);
             
-            _sut = new InputChecker(mockRules.Object);
+            _sut = new InputChecker(mockRules.Object, new Mock<ITree>().Object);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Day7Tests.InputCheckerTests
             var mockRules = new Mock<IRules>();
             mockRules.Setup(r => r.Rules).Returns(inputArray);
             
-            _sut = new InputChecker(mockRules.Object);
+            _sut = new InputChecker(mockRules.Object, new Mock<ITree>().Object);
         }
 
         [Test]
