@@ -36,16 +36,7 @@ namespace Day7
             }
         }
 
-        //public int NumberOfBagsInTheContextsRecursive => Contents.Count()+Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
-        public int NumberOfBagsInTheContextsRecursive
-        {
-            get
-            {
-                var cnt = Contents.Count();
-                var sm = Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
-                return  cnt+ sm;
-            }
-        }
+        public int NumberOfBagsInTheContextsRecursive => Contents.Count()+Contents.Sum(c => c.NumberOfBagsInTheContextsRecursive);
 
         public bool ContainsAGoldBag
         {

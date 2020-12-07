@@ -4,7 +4,7 @@ namespace Day7
 {
     public class Tree:ITree
     {
-        private Dictionary<string,IBag> _bags = new Dictionary<string, IBag>();
+        private readonly Dictionary<string,IBag> _bags = new Dictionary<string, IBag>();
         
         public void AddNode(IBag bag)
         {
