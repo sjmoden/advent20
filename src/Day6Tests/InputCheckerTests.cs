@@ -5,7 +5,7 @@ using Tools;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable CheckNamespace
-namespace Day6Tests
+namespace Day6Tests.InputCheckerTests
 {
     [TestFixture]
     public class When_running_input_checker_with_example_values

@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable CheckNamespace
-namespace Day1Tests.NumberCheckerTests.InputCheckerTests
+namespace Day1Tests.InputCheckerTests
 {
     [TestFixture]
     public class When_running_input_checker_with_example_values_for_part1
