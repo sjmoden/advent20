@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 
 namespace Tools
@@ -38,7 +39,8 @@ namespace Tools
 
         public string[] GetPuzzleInputAsArray(string url)
         {
-            return GetPuzzleInputAsArray(url, "\n");
+            var puzzleInput = GetPuzzleInputAsArray(url, "\n");
+            return puzzleInput.Take(puzzleInput.Length -1).ToArray();
         }
     }
 }
