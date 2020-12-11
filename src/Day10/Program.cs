@@ -17,7 +17,7 @@ namespace Day10
             Console.WriteLine($"Part 1: {inputChecker.CheckInputToGetAnswerPart1()}");
             Console.WriteLine($"Part 1 Execution Time: {watch.ElapsedMilliseconds} ms");
             
-            watch.Reset();
+            watch.Restart();
             Console.WriteLine($"Part 2: {inputChecker.CheckInputToGetAnswerPart2()}");
             Console.WriteLine($"Part 2 Execution Time: {watch.ElapsedMilliseconds} ms");
         }
