@@ -1,13 +1,11 @@
-﻿
-
-// ReSharper disable InconsistentNaming
-// ReSharper disable CheckNamespace
-
-using Day12;
+﻿using Day12;
 using Moq;
 using NUnit.Framework;
 using Tools;
 
+
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace Day12Tests.InputCheckerTests
 {
     [TestFixture]
