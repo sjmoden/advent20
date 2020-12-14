@@ -30,7 +30,7 @@ namespace Day12Tests.InputCheckerTests
             var mockPuzzleInput = new Mock<IPuzzleInput>();
             mockPuzzleInput.Setup(p => p.GetPuzzleInputAsArray(It.IsAny<string>())).Returns(inputArray);
             
-            _sut = new InputChecker(mockPuzzleInput.Object, new ShipMover());
+            _sut = new InputChecker(mockPuzzleInput.Object, new Ship(new ShipMover()), new Ship(new ShipMoverUsingWaypoint()));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Day12Tests.InputCheckerTests
         [Test]
         public void Then_output_value_for_part2_is_correct()
         {
-            Assert.That(_sut.CheckInputToGetAnswerPart2(), Is.EqualTo("26"));
+            Assert.That(_sut.CheckInputToGetAnswerPart2(), Is.EqualTo("286"));
         }
     }
 }

@@ -3,19 +3,15 @@ using System.Drawing;
 
 namespace Day12
 {
-    public class ShipMover:IShipMover
+    public class ShipMoverUsingWaypoint:IShipMover
     {
         private Point _movementPosition;
         private Point _position;
+        
         public void InitialisePosition(Point startingPosition)
         {
             _position = startingPosition;
-            _movementPosition = new Point(1,0);
-        }
-
-        public Point GetPosition()
-        {
-            return _position;
+            _movementPosition = new Point(10,1);
         }
 
         public void MoveForward(int distance)
@@ -28,34 +24,34 @@ namespace Day12
 
         public void MoveNorth(int distance)
         {
-            _position.Offset(0,distance);
+            _movementPosition.Offset(0, distance);
         }
 
         public void MoveEast(int distance)
         {
-            _position.Offset(distance,0);
+            _movementPosition.Offset(distance,0);
         }
 
         public void MoveWest(int distance)
         {
-            _position.Offset(-1 * distance,0);
+            _movementPosition.Offset(distance* -1,0);
         }
 
         public void MoveSouth(int distance)
         {
-            _position.Offset(0,-1 * distance);
+            _movementPosition.Offset(0, distance* -1);
         }
 
         public void RotateLeft(int degrees)
         {
-            Rotate(degrees, () => _movementPosition = new Point(-1 * _movementPosition.Y, _movementPosition.X));
+            Rotate(degrees,() =>_movementPosition = new Point(-1 * _movementPosition.Y, _movementPosition.X));
         }
 
         public void RotateRight(int degrees)
         {
-            Rotate(degrees, () => _movementPosition = new Point(_movementPosition.Y, -1 * _movementPosition.X));
+            Rotate(degrees,() => _movementPosition = new Point(_movementPosition.Y, -1 * _movementPosition.X));
         }
-
+        
         private static void Rotate(int degrees,Action rotationAction)
         {
             if (degrees % 90 != 0)
@@ -69,6 +65,11 @@ namespace Day12
             {
                 rotationAction.Invoke();
             }
+        }
+        
+        public Point GetPosition()
+        {
+            return _position;
         }
     }
 }

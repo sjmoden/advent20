@@ -1,6 +1,7 @@
 ﻿using System;
 using Tools;
 using Unity;
+using Unity.Injection;
 
 namespace Day12
 {
@@ -24,7 +25,10 @@ namespace Day12
         private static IUnityContainer BuildUnityContainer()
         {
             var container = UnityCreator.BuildDefaultUnityContainer();
-            container.RegisterType<IShipMover,ShipMover>();
+            container.RegisterType<IShipMover,ShipMover>(nameof(ShipMover));
+            container.RegisterType<IShipMover,ShipMoverUsingWaypoint>(nameof(ShipMoverUsingWaypoint));
+            container.RegisterType<IShip,Ship>("Ship",new InjectionConstructor(container.Resolve<IShipMover>(nameof(ShipMover))));
+            container.RegisterType<IShip,Ship>("ShipUsingWaypoint", new InjectionConstructor(container.Resolve<IShipMover>(nameof(ShipMoverUsingWaypoint))));
             container.RegisterType<IInputChecker,InputChecker>();
             return container;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Day12;
 using NUnit.Framework;
 
@@ -8,72 +7,81 @@ using NUnit.Framework;
 namespace Day12Tests.ShipMoverTests
 {
     [TestFixture]
-    public class When_moving_the_ship_east
+    public class When_moving_the_ship
     {
         [Test]
         public void Then_the_ship_moves_east()
         {
             const int distance = 5;
             var shipMover = new ShipMover();
-            var position = shipMover.Move(Direction.East, distance, new Point(0, 0));
-            Assert.That(position, Is.EqualTo(new Point(distance, 0)));
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.MoveEast(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(distance, 0)));
         }
-    }
-    
-    [TestFixture]
-    public class When_moving_the_ship_north
-    {
+        
         [Test]
         public void Then_the_ship_moves_north()
         {
             const int distance = 5;
             var shipMover = new ShipMover();
-            var position = shipMover.Move(Direction.North, distance, new Point(0, 0));
-            Assert.That(position, Is.EqualTo(new Point(0, distance)));
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.MoveNorth(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(0, distance)));
         }
-    }
-    
-    [TestFixture]
-    public class When_moving_the_ship_west
-    {
-        [Test]
-        public void Then_the_ship_moves_west()
-        {
-            const int distance = -5;
-            var shipMover = new ShipMover();
-            var position = shipMover.Move(Direction.West, Math.Abs(distance), new Point(0, 0));
-            Assert.That(position, Is.EqualTo(new Point(distance, 0)));
-        }
-    }
-    
-    [TestFixture]
-    public class When_moving_the_ship_south
-    {
+        
         [Test]
         public void Then_the_ship_moves_south()
         {
-            const int distance = -5;
+            const int distance = 5;
             var shipMover = new ShipMover();
-            var position = shipMover.Move(Direction.South, Math.Abs(distance), new Point(0, 0));
-            Assert.That(position, Is.EqualTo(new Point(0, distance)));
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.MoveSouth(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(0, -1 * distance)));
         }
-    }
-
-    [TestFixture]
-    public class When_rotating
-    {
-        [TestCase(0,true, Direction.North)]
-        [TestCase(90,true, Direction.West)]
-        [TestCase(180,true, Direction.South)]
-        [TestCase(270,true, Direction.East)]
-        [TestCase(0,false, Direction.North)]
-        [TestCase(90,false, Direction.East)]
-        [TestCase(180,false, Direction.South)]
-        [TestCase(270,false, Direction.West)]
-        public void Then_the_rotation_is_correct(int degrees, bool rotateLeft, Direction expectedResult)
+        
+        [Test]
+        public void Then_the_ship_moves_west()
         {
+            const int distance = 5;
             var shipMover = new ShipMover();
-            Assert.That(shipMover.Rotate(Direction.North, degrees, rotateLeft), Is.EqualTo(expectedResult));
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.MoveWest(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(-1 * distance,0)));
+        }
+        
+        [Test]
+        public void Then_the_ship_moves_forward()
+        {
+            //the ship starts facing east
+            const int distance = 5;
+            var shipMover = new ShipMover();
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.MoveForward(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(distance,0)));
+        }
+        
+        [Test]
+        public void Then_the_ship_moves_forward_after_rotation_left()
+        {
+            //the ship starts facing east
+            const int distance = 5;
+            var shipMover = new ShipMover();
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.RotateLeft(270);
+            shipMover.MoveForward(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(0,-1 * distance)));
+        }
+        
+        [Test]
+        public void Then_the_ship_moves_forward_after_rotation_right()
+        {
+            //the ship starts facing east
+            const int distance = 5;
+            var shipMover = new ShipMover();
+            shipMover.InitialisePosition(new Point(0,0));
+            shipMover.RotateRight(270);
+            shipMover.MoveForward(distance);
+            Assert.That(shipMover.GetPosition(), Is.EqualTo(new Point(0,distance)));
         }
     }
 }

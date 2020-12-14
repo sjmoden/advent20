@@ -4,7 +4,15 @@ namespace Day12
 {
     public interface IShipMover
     {
-        Point Move(Direction direction, int distance, Point currentPosition);
-        Direction Rotate(Direction direction, int degrees, bool rotateLeft);
+        void InitialisePosition(Point startingPosition);
+
+        Point GetPosition();
+        void MoveForward(int distance);
+        void MoveNorth(int distance);
+        void MoveEast(int distance);
+        void MoveWest(int distance);
+        void MoveSouth(int distance);
+        void RotateLeft(int degrees);
+        void RotateRight(int degrees);
     }
 }

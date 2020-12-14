@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using Tools;
+using Unity;
 
 namespace Day12
 {
@@ -7,62 +10,85 @@ namespace Day12
     {
         private const string InputUrl = "https://adventofcode.com/2020/day/12/input";
         private readonly IPuzzleInput _puzzleInput;
-        private readonly IShipMover _shipMover;
+        private readonly IShip _ship;
+        private readonly IShip _shipUsingWayPoint;
 
-        public InputChecker(IPuzzleInput puzzleInput, IShipMover shipMover)
+        public InputChecker(IPuzzleInput puzzleInput, [Dependency("Ship")] IShip ship, [Dependency("ShipUsingWaypoint")] IShip shipUsingWayPoint)
         {
             _puzzleInput = puzzleInput;
-            _shipMover = shipMover;
+            _ship = ship;
+            _shipUsingWayPoint = shipUsingWayPoint;
         }
         
         public string CheckInputToGetAnswerPart1()
         {
-            var ship = new Ship(_shipMover);
-            var values = _puzzleInput.GetPuzzleInputAsArray(InputUrl);
-            foreach (var value in values)
+            var ship = _ship.SetUpShip(new Point(0,0));
+            RunInputOnShip(ship);
+            return ship.GetTaxicabDistance().ToString();
+        }
+
+        private void RunInputOnShip(Ship ship)
+        {
+            foreach (var value in Input)
             {
                 var command = value.Substring(0, 1);
                 var distance = value.Substring(1);
 
                 if (!int.TryParse(distance, out var distanceValue))
                 {
-                    throw  new Exception("Input not in the correct state");
+                    throw new Exception("Input not in the correct state");
                 }
 
                 switch (command)
                 {
                     case "F":
-                        ship.MoveForward(distanceValue);
+                        ship.ShipMover.MoveForward(distanceValue);
                         break;
                     case "N":
-                        ship.Move(Direction.North, distanceValue);
+                        ship.ShipMover.MoveNorth(distanceValue);
                         break;
                     case "S":
-                        ship.Move(Direction.South, distanceValue);
+                        ship.ShipMover.MoveSouth(distanceValue);
                         break;
                     case "E":
-                        ship.Move(Direction.East, distanceValue);
+                        ship.ShipMover.MoveEast(distanceValue);
                         break;
                     case "W":
-                        ship.Move(Direction.West, distanceValue);
+                        ship.ShipMover.MoveWest(distanceValue);
                         break;
                     case "R":
-                        ship.RotateRight(distanceValue);
+                        ship.ShipMover.RotateRight(distanceValue);
                         break;
                     case "L":
-                        ship.RotateLeft(distanceValue);
+                        ship.ShipMover.RotateLeft(distanceValue);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(command), command, null);
                 }
             }
-            
-            return ship.GetTaxicabDistance().ToString();
         }
 
         public string CheckInputToGetAnswerPart2()
         {
-            throw new System.NotImplementedException();
+            var ship = _shipUsingWayPoint.SetUpShip(new Point(0,0));
+            RunInputOnShip(ship);
+            return ship.GetTaxicabDistance().ToString();
+        }
+        
+        
+        private string[] _input;
+
+        private IEnumerable<string> Input
+        {
+            get
+            {
+                if (_input == null)
+                {
+                    _input = _puzzleInput.GetPuzzleInputAsArray(InputUrl);
+                }
+
+                return _input;
+            }
         }
     }
 }
