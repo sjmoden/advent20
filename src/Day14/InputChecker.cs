@@ -51,7 +51,40 @@ namespace Day14
 
         public string CheckInputToGetAnswerPart2()
         {
-            throw new NotImplementedException();
+            var memory = new Memory();
+            var currentMask = string.Empty;
+            foreach (var value in Input)
+            {
+                if (value.StartsWith("mask"))
+                {
+                    currentMask = value.Replace("mask = ", string.Empty);
+                    continue;
+                }
+                
+                var matchesPosition = Regex.Match(value,@"mem\[(?'position'[0-9]*)]");
+                
+                var positionText = matchesPosition.Groups["position"].Value;
+                if (!int.TryParse(positionText, out var positionValue))
+                {
+                    throw new Exception("The Position is not a value");
+                }
+                
+                var matchesNumber = Regex.Match(value,@"mem\[[0-9]*] = (?'number'[0-9]*)");
+                
+                var number = matchesNumber.Groups["number"].Value;
+                if (!int.TryParse(number, out var numberValue))
+                {
+                    throw new Exception("The number is not a value");
+                }
+
+                var positions = BitMasker.ApplyMultipleBitMasks(currentMask, positionValue);
+                foreach (var position in positions)
+                {
+                    memory.UpdateMemory(position, numberValue);    
+                }
+            }
+
+            return memory.ReturnMemorySum().ToString();
         }
         
         private string[] _input;

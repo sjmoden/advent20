@@ -7,7 +7,7 @@ namespace Day14
     {
         private readonly Dictionary<long, long> _memory = new Dictionary<long, long>();
 
-        public void UpdateMemory(int position, long value)
+        public void UpdateMemory(long position, long value)
         {
             if (!_memory.TryAdd(position, value))
             {
