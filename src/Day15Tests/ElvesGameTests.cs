@@ -9,7 +9,7 @@ namespace Day15Tests.ElvesGameTests
     [TestFixture]
     public class When_running_GetNextValue
     {
-        private static IEnumerable<TestCaseData> SumCalcTestData
+        private static IEnumerable<TestCaseData> TestData
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Day15Tests.ElvesGameTests
             }
         }
 
-        [TestCaseSource(nameof(SumCalcTestData))]
+        [TestCaseSource(nameof(TestData))]
         public void Then_the_value_is_correct(List<int> input,int numberOfIterations,int output)
         {
             var elvesGame = new ElvesGame().SetUpGame(input);
