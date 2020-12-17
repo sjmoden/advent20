@@ -38,28 +38,26 @@ namespace Day17
         {
             var parsedInput = _inputParser3.ParseInput(Input.ToArray());
 
-            var cycledInput = _cycleRunner3.Run(parsedInput);
-            cycledInput = _cycleRunner3.Run(cycledInput);
-            cycledInput = _cycleRunner3.Run(cycledInput);
-            cycledInput = _cycleRunner3.Run(cycledInput);
-            cycledInput = _cycleRunner3.Run(cycledInput);
-            cycledInput = _cycleRunner3.Run(cycledInput);
+            const int numberOfIterations = 6;
+            for (var i = 0; i < numberOfIterations; i++)
+            {
+                parsedInput = _cycleRunner3.Run(parsedInput);
+            }
 
-            return cycledInput.Count(c => c.Active).ToString();
+            return parsedInput.Count(c => c.Active).ToString();
         }
         
         public string CheckInputToGetAnswerPart2()
         {
             var parsedInput = _inputParser4.ParseInput(Input.ToArray());
 
-            var cycledInput = _cycleRunner4.Run(parsedInput);
-            cycledInput = _cycleRunner4.Run(cycledInput);
-            cycledInput = _cycleRunner4.Run(cycledInput);
-            cycledInput = _cycleRunner4.Run(cycledInput);
-            cycledInput = _cycleRunner4.Run(cycledInput);
-            cycledInput = _cycleRunner4.Run(cycledInput);
+            const int numberOfIterations = 6;
+            for (var i = 0; i < numberOfIterations; i++)
+            {
+                parsedInput = _cycleRunner4.Run(parsedInput);
+            }
 
-            return cycledInput.Count(c => c.Active).ToString();
+            return parsedInput.Count(c => c.Active).ToString();
         }
         
         private string[] _input;
