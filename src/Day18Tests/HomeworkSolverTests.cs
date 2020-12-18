@@ -26,7 +26,7 @@ namespace Day18Tests.HomeworkSolverTests
         [TestCase("5 * 7 * 8 + 5 * 7 + 4",1999 )]
         public void Then_the_result_is_correct(string input, long result)
         {
-            Assert.That(HomeworkSolver.SolveProblem(input), Is.EqualTo(result));
+            Assert.That(new HomeworkSolver().SolveProblem(input), Is.EqualTo(result));
         }
     }
 }

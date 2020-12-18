@@ -16,12 +16,12 @@ namespace Day18
         
         public string CheckInputToGetAnswerPart1()
         {
-            return Input.Sum(HomeworkSolver.SolveProblem).ToString();
+            return Input.Sum(new HomeworkSolver().SolveProblem).ToString();
         }
 
         public string CheckInputToGetAnswerPart2()
         {
-            throw new System.NotImplementedException();
+            return Input.Sum(new AdvancedHomeworkSolver().SolveProblem).ToString();
         }
         
         private string[] _input;
