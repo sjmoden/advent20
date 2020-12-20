@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using Day19;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace Day19Tests.RuleReaderTests
 {
     [TestFixture]
-    public class When_running_
+    public class When_running_CheckStringAgainstRules_using_no_substitution_of_8_and_11
     {
-        private RuleReader _ruleReader = new RuleReader();
+        private readonly RuleReader _ruleReader = new RuleReader();
         
         [SetUp]
         public void Setup()
@@ -22,14 +24,81 @@ namespace Day19Tests.RuleReaderTests
                 ,"5: \"b\""
             };
             
-            _ruleReader.MakeRegexFromRules(input);
+            _ruleReader.MakeRegexFromRules(input,0);
         }
 
-        [TestCase("ababbb", true)]
-        [TestCase("abbbab", true)]
-        [TestCase("bababa", false)]
-        [TestCase("aaabbb", false)]
-        [TestCase("aaaabbb", false)]
+        [TestCase(@"ababbb", true)]
+        [TestCase(@"abbbab", true)]
+        [TestCase(@"bababa", false)]
+        [TestCase(@"aaabbb", false)]
+        [TestCase(@"aaaabbb", false)]
+        public void Then_the_result_is_correct(string checkString, bool expectedResult)
+        {
+            Assert.That(_ruleReader.CheckStringAgainstRules(checkString),Is.EqualTo(expectedResult));
+        }
+    }
+    
+    [TestFixture]
+    public class When_running_CheckStringAgainstRules_using_substitution_of_8_and_11
+    {
+        private readonly RuleReader _ruleReader = new RuleReader();
+        
+        [SetUp]
+        public void Setup()
+        {
+            var input = new List<string>
+            {
+                "42: 9 14 | 10 1",
+                "9: 14 27 | 1 26",
+                "10: 23 14 | 28 1",
+                "1: \"a\"",
+                "11: 42 31 | 42 11 31",
+                "5: 1 14 | 15 1",
+                "19: 14 1 | 14 14",
+                "12: 24 14 | 19 1",
+                "16: 15 1 | 14 14",
+                "31: 14 17 | 1 13",
+                "6: 14 14 | 1 14",
+                "2: 1 24 | 14 4",
+                "0: 8 11",
+                "13: 14 3 | 1 12",
+                "15: 1 | 14",
+                "17: 14 2 | 1 7",
+                "23: 25 1 | 22 14",
+                "28: 16 1",
+                "4: 1 1",
+                "20: 14 14 | 1 15",
+                "3: 5 14 | 16 1",
+                "27: 1 6 | 14 18",
+                "14: \"b\"",
+                "21: 14 1 | 1 14",
+                "25: 1 1 | 1 14",
+                "22: 14 14",
+                "8: 42 | 42 8",
+                "26: 14 22 | 1 20",
+                "18: 15 15",
+                "7: 14 5 | 1 21",
+                "24: 14 1",
+
+            };
+            
+            _ruleReader.MakeRegexFromRules(input,50);
+        }
+
+        [TestCase("abbbbbabbbaaaababbaabbbbabababbbabbbbbbabaaaa", false)]
+        [TestCase("bbabbbbaabaabba", true)]
+        [TestCase("babbbbaabbbbbabbbbbbaabaaabaaa", true)]
+        [TestCase("aaabbbbbbaaaabaababaabababbabaaabbababababaaa", true)]
+        [TestCase("bbbbbbbaaaabbbbaaabbabaaa", true)]
+        [TestCase("bbbababbbbaaaaaaaabbababaaababaabab", true)]
+        [TestCase("ababaaaaaabaaab", true)]
+        [TestCase("ababaaaaabbbaba", true)]
+        [TestCase("baabbaaaabbaaaababbaababb", true)]
+        [TestCase("abbbbabbbbaaaababbbbbbaaaababb", true)]
+        [TestCase("aaaaabbaabaaaaababaa", true)]
+        [TestCase("aaaabbaabbaaaaaaabbbabbbaaabbaabaaa", true)]
+        [TestCase("babaaabbbaaabaababbaabababaaab", false)]
+        [TestCase("aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba", true)]
         public void Then_the_result_is_correct(string checkString, bool expectedResult)
         {
             Assert.That(_ruleReader.CheckStringAgainstRules(checkString),Is.EqualTo(expectedResult));
