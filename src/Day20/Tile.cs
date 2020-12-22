@@ -8,13 +8,122 @@ namespace Day20
     public class Tile
     {
         public int Id;
-        
+
+        private readonly List<string> _map = new List<string>();
+
+        public List<string> Map
+        {
+            get
+            {
+                var transformed= Transformer.TransformList(_map, Rotation, FlipHorizontal, FlipVertical).ToList();
+                
+                var map = new List<string>();
+                foreach (var row in transformed.Skip(1).Take(transformed.Count - 2))
+                {
+                    map.Add(row.Substring(1, transformed.Count - 2));
+                }
+
+                return map;
+            }
+        }
+
+
         private string _topLine;
+
+        public Tile Copy()
+        {
+            return (Tile)MemberwiseClone();
+        }
+        
+        public bool GetOrientationFromSingleSide(Side side, string value)
+        {
+            var index = 0;
+            while (GetSide(side) != new string(value.ToCharArray().Reverse().ToArray()))
+            {
+                if (index == 12)
+                {
+                    return false;
+                }
+                RotationSetUp(index);
+                index++;
+            }
+
+            return true;
+        }
+
+        private string GetSide(Side side)
+        {
+            switch (side)
+            {
+                case Side.Top:
+                    return TopLine;
+                case Side.Left:
+                    return LeftLine;
+                case Side.Right:
+                    return RightLine;
+                case Side.Bottom:
+                    return BottomLine;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(side), side, null);
+            }
+        }
+        
+        
+        public void GetCornerOrientation(Tile right, Tile bottom)
+        {
+            //RightHandMatch
+            var index = 0;
+            var rightIndex = 0;
+            while (RightLine != new string(right.LeftLine.ToCharArray().Reverse().ToArray()))
+            {
+                RotationSetUp(index);
+                right.RotationSetUp(rightIndex);
+
+                if (index % 12 == 11)
+                {
+                    rightIndex++;
+                }
+                
+                index++;
+            }
+            
+            index = 0;
+            var bottomIndex = 0;
+            while (bottom.TopLine != new string(BottomLine.ToCharArray().Reverse().ToArray()))
+            {
+                switch (index %2)
+                {
+                    case 0:
+                        FlipHorizontal = false;
+                        FlipVertical = false;
+                        break;
+                    case 1:
+                        FlipHorizontal = false;
+                        FlipVertical = true;
+                        break;
+                }
+                
+                bottom.RotationSetUp(bottomIndex);
+                if (index % 2 == 1)
+                {
+                    bottomIndex++;
+                }
+
+                index++;
+            }
+        }
+        
+        
+
+        public void RotationSetUp(int index)
+        {
+            Rotation = index % 4;
+            FlipVertical = index == 4 || index == 5 || index == 6 || index == 7 ;
+            FlipHorizontal = index == 8 || index == 9 || index == 10 || index == 11;
+        }
 
         public bool OneEdgeMatches(Tile tileToMatch)
         {
-            var matches = 0;
-            
             tileToMatch.FlipHorizontal = false;
             tileToMatch.FlipVertical = false;
             if (RotationsAndMatch(tileToMatch))
@@ -102,7 +211,7 @@ namespace Day20
 
                 if (FlipVertical)
                 {
-                    return postRotation.oppositeLine;
+                    return new string(postRotation.oppositeLine.ToCharArray().Reverse().ToArray());
                 }
 
                 if (FlipHorizontal)
@@ -131,7 +240,7 @@ namespace Day20
 
                 if (FlipVertical)
                 {
-                    return postRotation.oppositeLine;
+                    return  new string(postRotation.oppositeLine.ToCharArray().Reverse().ToArray());
                 }
 
                 if (FlipHorizontal)
@@ -159,7 +268,7 @@ namespace Day20
 
                 if (FlipHorizontal)
                 {
-                    return postRotation.oppositeLine;
+                    return new string(postRotation.oppositeLine.ToCharArray().Reverse().ToArray());
                 }
 
                 if (FlipVertical)
@@ -187,7 +296,7 @@ namespace Day20
 
                 if (FlipHorizontal)
                 {
-                    return postRotation.oppositeLine;
+                    return  new string(postRotation.oppositeLine.ToCharArray().Reverse().ToArray());
                 }
 
                 if (FlipVertical)
@@ -201,7 +310,7 @@ namespace Day20
         
         public bool FlipVertical;
         public bool FlipHorizontal;
-        public int Rotation = 0;
+        public int Rotation;
 
         public void ReadId(string input)
         {
@@ -222,9 +331,12 @@ namespace Day20
         public void ReadTile(IEnumerable<string> input)
         {
             _topLine = input.First();
-            
+            var y = 0;
             foreach (var value in input)
             {
+                _map.Add(value);
+
+                y++;
                 _leftLine += value.Substring(0,1);
                 _rightLine += value.Substring(value.Length - 1,1);
             }

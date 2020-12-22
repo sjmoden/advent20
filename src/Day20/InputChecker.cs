@@ -17,6 +17,16 @@ namespace Day20
         
         public string CheckInputToGetAnswerPart1()
         {
+            return Map.GetCorners().Select(t => (long)t.Id).Aggregate((a,b)=> a*b).ToString();
+        }
+
+        public string CheckInputToGetAnswerPart2()
+        {
+            return Map.RotateAndFindMonsters().ToString();
+        }
+
+        private void PopulateMap()
+        {
             var tiles = new List<Tile>();
             var tile = new Tile();
             var tileData = new List<string>();
@@ -36,50 +46,140 @@ namespace Day20
                     tile = new Tile();
                     continue;
                 }
-                
+
                 tileData.Add(line);
-                
             }
 
-            var tileInfo = new List<(int countOfMatches, long Id)>();
-            foreach (var tileToReview in tiles)
-            {
-                tileInfo.Add((GetCountOfMatches(tiles, tileToReview), tileToReview.Id));
-            }
-
-            return tileInfo.Where(t => t.countOfMatches == 2).Select(t => t.Id).Aggregate((a,b)=> a*b).ToString();
+            _map = new SquareMap((int) Math.Sqrt(tiles.Count));
+            _map.BuildMap(tiles);
         }
 
-        private static int GetCountOfMatches(List<Tile> tiles, Tile tileToReview)
+        private SquareMap _map;
+
+        private SquareMap Map
         {
-            var count = 0;
-            foreach (var tileToCompare in tiles)
+            get
             {
-                if (count == 4)
+                if (_map == null)
                 {
-                    return count;
-                }
-                
-                if (tileToReview.Id == tileToCompare.Id)
-                {
-                    continue;
+                    PopulateMap();
                 }
 
-                if (tileToReview.OneEdgeMatches(tileToCompare))
-                {
-                    count++;
-                }
+                return _map;
             }
-
-            return count;
-        }
-
-        public string CheckInputToGetAnswerPart2()
-        {
-            throw new System.NotImplementedException();
         }
         
-        private string[] _input;
+        private string[] _input= new[]
+            {
+                "Tile 2311:",
+                "..##.#..#.",
+                "##..#.....",
+                "#...##..#.",
+                "####.#...#",
+                "##.##.###.",
+                "##...#.###",
+                ".#.#.#..##",
+                "..#....#..",
+                "###...#.#.",
+                "..###..###",
+                "",
+                "Tile 1951:",
+                "#.##...##.",
+                "#.####...#",
+                ".....#..##",
+                "#...######",
+                ".##.#....#",
+                ".###.#####",
+                "###.##.##.",
+                ".###....#.",
+                "..#.#..#.#",
+                "#...##.#..",
+                "",
+                "Tile 1171:",
+                "####...##.",
+                "#..##.#..#",
+                "##.#..#.#.",
+                ".###.####.",
+                "..###.####",
+                ".##....##.",
+                ".#...####.",
+                "#.##.####.",
+                "####..#...",
+                ".....##...",
+                "",
+                "Tile 1427:",
+                "###.##.#..",
+                ".#..#.##..",
+                ".#.##.#..#",
+                "#.#.#.##.#",
+                "....#...##",
+                "...##..##.",
+                "...#.#####",
+                ".#.####.#.",
+                "..#..###.#",
+                "..##.#..#.",
+                "",
+                "Tile 1489:",
+                "##.#.#....",
+                "..##...#..",
+                ".##..##...",
+                "..#...#...",
+                "#####...#.",
+                "#..#.#.#.#",
+                "...#.#.#..",
+                "##.#...##.",
+                "..##.##.##",
+                "###.##.#..",
+                "",
+                "Tile 2473:",
+                "#....####.",
+                "#..#.##...",
+                "#.##..#...",
+                "######.#.#",
+                ".#...#.#.#",
+                ".#########",
+                ".###.#..#.",
+                "########.#",
+                "##...##.#.",
+                "..###.#.#.",
+                "",
+                "Tile 2971:",
+                "..#.#....#",
+                "#...###...",
+                "#.#.###...",
+                "##.##..#..",
+                ".#####..##",
+                ".#..####.#",
+                "#..#.#..#.",
+                "..####.###",
+                "..#.#.###.",
+                "...#.#.#.#",
+                "",
+                "Tile 2729:",
+                "...#.#.#.#",
+                "####.#....",
+                "..#.#.....",
+                "....#..#.#",
+                ".##..##.#.",
+                ".#.####...",
+                "####.#.#..",
+                "##.####...",
+                "##..#.##..",
+                "#.##...##.",
+                "",
+                "Tile 3079:",
+                "#.#.#####.",
+                ".#..######",
+                "..#.......",
+                "######....",
+                "####.#..#.",
+                ".#...#.##.",
+                "#.#####.##",
+                "..#.###...",
+                "..#.......",
+                "..#.###...",
+                ""
+            };
         private IEnumerable<string> Input => _input ??= _puzzleInput.GetPuzzleInputAsArray(InputUrl);
     }
 }
