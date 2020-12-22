@@ -88,7 +88,7 @@ namespace Day20
             var count = 0;
             for (var row = 2; row < fullMap.Count; row++)
             {
-                var matches = Regex.Matches(fullMap[row], @".#.{2}#.{2}#.{2}#.{2}#.{2}#.{3}");
+                var matches = Regex.Matches(fullMap[row], @".(?=#.{2}#.{2}#.{2}#.{2}#.{2}#.{3})");
                 foreach (Match match in matches)
                 {
                     var startIndex = match.Index;
