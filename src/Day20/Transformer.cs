@@ -5,7 +5,7 @@ namespace Day20
 {
     public static class Transformer
     {
-        public static IEnumerable<string> TransformList(List<string> inputSquareMap, int rotation, bool flipHorizontal,
+        public static IEnumerable<string> TransformList(IEnumerable<string> inputSquareMap, int rotation, bool flipHorizontal,
             bool flipVertical)
         {
             var map = new List<string>();

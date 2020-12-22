@@ -7,6 +7,10 @@ namespace Day20
 {
     public class InputChecker:IInputChecker
     {
+        //This might be one of the ugliest thing I have written in years.
+        //It took a while to get a result and the code became more and more spag like while the days went on
+        //I might come back and tidy it, but I probably will not want to look at this ever again
+        
         private const string InputUrl = "https://adventofcode.com/2020/day/20/input";
         private readonly IPuzzleInput _puzzleInput;
 
