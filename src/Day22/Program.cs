@@ -13,7 +13,7 @@ namespace Day22
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
 
-            //Console.WriteLine($"Part 1: {inputChecker.CheckInputToGetAnswerPart1()}");
+            Console.WriteLine($"Part 1: {inputChecker.CheckInputToGetAnswerPart1()}");
             Console.WriteLine($"Part 1 Execution Time: {watch.ElapsedMilliseconds} ms");
 
             watch.Restart();

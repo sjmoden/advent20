@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Day22
@@ -7,7 +6,7 @@ namespace Day22
     public class Hand
     {
         private List<int> _currentHand;
-        public int Id;
+        public readonly int Id;
         public Hand(List<int> hand, int id)
         {
             Id = id;
@@ -60,6 +59,5 @@ namespace Day22
         {
             return new Hand(_currentHand,Id);
         }
-        
     }
 }

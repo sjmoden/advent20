@@ -43,12 +43,10 @@ namespace Day22
             return player2;
         }
 
-        public static Hand PlayRecursiveGameAndReturnWinner(Hand player1, Hand player2, int game)
+        public static Hand PlayRecursiveGameAndReturnWinner(Hand player1, Hand player2, int depth)
         {
-            Console.WriteLine($"=== Game {game} ===");
+            Console.WriteLine($"=== Depth: {depth} ===");
             var previousRounds = new HashSet<string>();
-
-            
             
             var round = 0;
             while (player1.HandCount > 0 && player2.HandCount > 0)
@@ -63,27 +61,18 @@ namespace Day22
                 previousRounds.Add(currentRoundHash);
                 
                 round++;
-                Console.WriteLine();
                 
-                Console.WriteLine($"-- Round {round} (Game {game}) --");
-                Console.WriteLine($"Player 1's deck: {player1.CurrentHand}");
-                Console.WriteLine($"Player 2's deck: {player2.CurrentHand}");
-                Console.WriteLine($"Player 1 plays: {player1.GetTopCard()}");
-                Console.WriteLine($"Player 2 plays: {player2.GetTopCard()}");
-                //Console.WriteLine($"Player 1 plays: {player1.GetTopCard()}");
-                //Console.WriteLine($"Player 2 plays: {player2.GetTopCard()}");
+                Console.WriteLine($"-- Depth: {depth} (Round {round}) --");
 
                 if ((player1.GetTopCard() > player1.HandCount - 1) || (player2.GetTopCard() > player2.HandCount - 1))
                 {
                     if (player1.GetTopCard() > player2.GetTopCard())
                     {
-                        Console.WriteLine($"Player 1 wins round {round} of game {game}!");
                         player1.PlayerWon(player2.GetTopCard());
                         player2.PlayerLost();
                         continue;
                     }
-
-                    Console.WriteLine($"Player 2 wins round {round} of game {game}!");
+                    
                     player2.PlayerWon(player1.GetTopCard());
                     player1.PlayerLost();
                     continue;
@@ -91,18 +80,15 @@ namespace Day22
 
                 var player1SubHand = player1.MakeNewHandSkippingCurrentTopCard(player1.GetTopCard());
                 var player2SubHand = player2.MakeNewHandSkippingCurrentTopCard(player2.GetTopCard());
-                Console.WriteLine("Playing a sub-game to determine the winner...");
-                var winner = PlayRecursiveGameAndReturnWinner(player1SubHand, player2SubHand, game +1);
+                var winner = PlayRecursiveGameAndReturnWinner(player1SubHand, player2SubHand, depth +1);
 
                 if (winner.Id == 1)
                 {
-                    //Console.WriteLine("Player 1 won!!!");
                     player1.PlayerWon(player2.GetTopCard());
                     player2.PlayerLost();
                     continue;
                 }
                 
-                //Console.WriteLine("Player 2 won!!!");
                 player2.PlayerWon(player1.GetTopCard());
                 player1.PlayerLost();
             }
