@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Tools;
 
@@ -85,18 +84,6 @@ namespace Day22
 
 
         private string[] _input;
-        //     = new[]
-        // {
-        //     "Player 1:",
-        //     "43",
-        //     "19",
-        //     "",
-        //     "Player 2:",
-        //     "2",
-        //     "29",
-        //     "14",
-        //     ""
-        // };
         private IEnumerable<string> Input => _input ??= _puzzleInput.GetPuzzleInputAsArray(InputUrl);
     }
 }
